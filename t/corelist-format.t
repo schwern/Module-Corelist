@@ -9,7 +9,7 @@ use warnings;
 use Test::Differences;
 use Test::More 'no_plan';
 
-eq_or_diff scalar `$^X -Ilib ./corelist -a Test::Harness`, <<'END';
+eq_or_diff scalar `$^X -Ilib ./corelist -a Test::Harness`, <<'END', "corelist -a";
 
 Test::Harness was first released with perl 5
   5          undef     
@@ -54,5 +54,54 @@ Test::Harness was first released with perl 5
   v5.11.5    3.17      
   v5.12.0    3.17      
   v5.12.0    3.17      
+
+END
+
+
+eq_or_diff scalar `$^X -Ilib ./corelist -v`, <<'END', "corelist -v";
+
+Module::CoreList has info on the following perl versions:
+5
+5.000
+5.001
+5.002
+5.00307
+5.004
+5.00405
+5.005
+5.00503
+5.00504
+v5.6.0
+v5.6.1
+v5.6.2
+v5.7.3
+v5.8.0
+v5.8.1
+v5.8.2
+v5.8.3
+v5.8.4
+v5.8.5
+v5.8.6
+v5.8.7
+v5.8.8
+v5.8.9
+v5.9.0
+v5.9.1
+v5.9.2
+v5.9.3
+v5.9.4
+v5.9.5
+v5.10.0
+v5.10.0
+v5.10.1
+v5.11.0
+v5.11.0
+v5.11.1
+v5.11.2
+v5.11.3
+v5.11.4
+v5.11.5
+v5.12.0
+v5.12.0
 
 END
