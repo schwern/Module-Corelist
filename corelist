@@ -180,14 +180,11 @@ sub module_version {
     print "\n",$msg,"\n";
 
     if(defined $ret and exists $Opts{a} and $Opts{a}){
-        for my $v(
-            sort keys %Module::CoreList::version ){
+        for my $v (sort keys %Module::CoreList::version ) {
+            next unless exists $Module::CoreList::version{$v}{$mod};
 
-            printf "  %-10s %-10s\n",
-                $v,
-                $Module::CoreList::version{$v}{$mod}
-                    || 'undef'
-                    if exists $Module::CoreList::version{$v}{$mod};
+            my $mod_v = $Module::CoreList::version{$v}{$mod} || 'undef';
+            printf "  %-10s %-10s\n", $v, $mod_v;
         }
         print "\n";
     }
