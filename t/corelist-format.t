@@ -7,8 +7,18 @@
 use strict;
 use warnings;
 
-use Test::Differences;
 use Test::More 'no_plan';
+
+# The core doesn't have Test::Differences, but its really handy
+# so emulate it with is() if its not available.
+BEGIN {
+    if( eval { require Test::Differences } ) {
+        *eq_or_diff = \&Test::Differences::eq_or_diff;
+    }
+    else {
+        *eq_or_diff = \&is;
+    }
+}
 
 # corelist -a
 eq_or_diff scalar `$^X -Ilib ./corelist -a Test::Harness`, <<'END', "corelist -a";
