@@ -84,7 +84,7 @@ use warnings;
 
 my %Opts;
 
-GetOptions(\%Opts, qw[ help|?! man! v|version:f a! d ] );
+GetOptions(\%Opts, qw[ help|?! man! v|version:s a! d ] );
 
 pod2usage(1) if $Opts{help};
 pod2usage(-verbose=>2) if $Opts{man};
@@ -156,7 +156,8 @@ sub module_version {
     my($mod,$ver) = @_;
 
     if ( $Opts{v} ) {
-	my $version_hash = Module::CoreList->find_version($Opts{v});
+	my $numeric_v = numify_version($Opts{v});
+	my $version_hash = Module::CoreList->find_version($numeric_v);
 	if ($version_hash) {
 	    print $mod, " ", $version_hash->{$mod} || 'undef', "\n";
 	    return;

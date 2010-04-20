@@ -9,6 +9,7 @@ use warnings;
 use Test::Differences;
 use Test::More 'no_plan';
 
+# corelist -a
 eq_or_diff scalar `$^X -Ilib ./corelist -a Test::Harness`, <<'END', "corelist -a";
 
 Test::Harness was first released with perl 5
@@ -58,6 +59,7 @@ Test::Harness was first released with perl 5
 END
 
 
+# corelist -v
 eq_or_diff scalar `$^X -Ilib ./corelist -v`, <<'END', "corelist -v";
 
 Module::CoreList has info on the following perl versions:
@@ -107,8 +109,24 @@ v5.12.0
 END
 
 
+# corelist -v PerlVersion
 my @out = `$^X -Ilib ./corelist -v 5.006`;
-is $out[1], "The following modules were in perl 5.006 CORE\n";
+is $out[1], "The following modules were in perl 5.006 CORE\n", "corelist -v X.YYY";
 
 @out = `$^X -Ilib ./corelist -v 5.6.0`;
-is $out[1], "The following modules were in perl 5.6.0 CORE\n";
+is $out[1], "The following modules were in perl 5.6.0 CORE\n", "corelist -v X.Y.Z";
+
+@out = `$^X -Ilib ./corelist -v v5.6.0`;
+is $out[1], "The following modules were in perl v5.6.0 CORE\n", "corelist -v vX.Y.Z";
+
+is `$^X -Ilib ./corelist -v 5.006 Test::Harness`, <<'END', "corelist -v X.YYY Module";
+Test::Harness 1.1604
+END
+
+is `$^X -Ilib ./corelist -v 5.6.0 Test::Harness`, <<'END', "corelist -v X.Y.Z Module";
+Test::Harness 1.1604
+END
+
+is `$^X -Ilib ./corelist -v v5.6.0 Test::Harness`, <<'END', "corelist -v vX.Y.Z Module";
+Test::Harness 1.1604
+END
