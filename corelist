@@ -192,9 +192,16 @@ sub display_a {
         next unless exists $Module::CoreList::version{$v}{$mod};
 
         my $mod_v = $Module::CoreList::version{$v}{$mod} || 'undef';
-        printf "  %-10s %-10s\n", $v, $mod_v;
+        printf "  %-10s %-10s\n", format_perl_version($v), $mod_v;
     }
     print "\n";
+}
+
+
+sub format_perl_version {
+    my $v = shift;
+    return $v if $v < 5.006;
+    return version->new($v)->normal;
 }
 
 
