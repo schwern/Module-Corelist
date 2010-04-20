@@ -107,8 +107,10 @@ if(exists $Opts{v} ){
 
     if ( !@ARGV ) {
 	print "\nThe following modules were in perl $Opts{v} CORE\n";
-	print "$_ ", $version_hash->{$_} || " ","\n"
-	for sort keys %$version_hash;
+	my $max_mod_len = max_mod_len($version_hash);
+	for my $mod ( sort keys %$version_hash ) {
+	    printf "%-${max_mod_len}s  %s\n", $mod, $version_hash->{$mod} || "";
+	}
 	print "\n";
 	exit 0;
     }
@@ -186,6 +188,22 @@ sub module_version {
     }
 }
 
+
+sub max_mod_len {
+    my $versions = shift;
+    my $max = 0;
+    for my $mod (keys %$versions) {
+        $max = max($max, length $mod);
+    }
+
+    return $max;
+}
+
+sub max {
+    my($this, $that) = @_;
+    return $this if $this > $that;
+    return $that;
+}
 
 sub display_a {
     my $mod = shift;
