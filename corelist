@@ -198,9 +198,18 @@ sub display_a {
 }
 
 
+{
+    my $have_version_pm;
+    sub have_version_pm {
+        return $have_version_pm if defined $have_version_pm;
+        return $have_version_pm = eval { require version; 1 };
+    }
+}
+
+
 sub format_perl_version {
     my $v = shift;
-    return $v if $v < 5.006;
+    return $v if $v < 5.006 or !have_version_pm;
     return version->new($v)->normal;
 }
 
@@ -208,7 +217,7 @@ sub format_perl_version {
 sub numify_version {
     my $ver = shift;
     if ($ver =~ /\..+\./) {
-	eval { require version ; 1 }
+	have_version_pm()
 	    or die "You need to install version.pm to use dotted version numbers\n";
         $ver = version->new($ver)->numify;
     }
