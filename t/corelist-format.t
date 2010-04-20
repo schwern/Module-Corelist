@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
-# This test will only work for this version of Module::CoreList.
-# It exists to prove the refactoring correct.
+# This test will break when the data in Module::CoreList changes.
+# It could be made generic, but the data changes infrequently, and
+# its much simpler to maintain manually.
 
 use strict;
 use warnings;
@@ -14,7 +15,6 @@ eq_or_diff scalar `$^X -Ilib ./corelist -a Test::Harness`, <<'END', "corelist -a
 
 Test::Harness was first released with perl 5
   5          undef     
-  5.000      undef     
   5.001      undef     
   5.002      1.07      
   5.00307    1.13      
@@ -44,16 +44,13 @@ Test::Harness was first released with perl 5
   v5.9.4     2.62      
   v5.9.5     2.64      
   v5.10.0    2.64      
-  v5.10.0    2.64      
   v5.10.1    3.17      
-  v5.11.0    3.17      
   v5.11.0    3.17      
   v5.11.1    3.17      
   v5.11.2    3.17      
   v5.11.3    3.17      
   v5.11.4    3.17      
   v5.11.5    3.17      
-  v5.12.0    3.17      
   v5.12.0    3.17      
 
 END
@@ -64,7 +61,6 @@ eq_or_diff scalar `$^X -Ilib ./corelist -v`, <<'END', "corelist -v";
 
 Module::CoreList has info on the following perl versions:
 5
-5.000
 5.001
 5.002
 5.00307
@@ -94,16 +90,13 @@ v5.9.3
 v5.9.4
 v5.9.5
 v5.10.0
-v5.10.0
 v5.10.1
-v5.11.0
 v5.11.0
 v5.11.1
 v5.11.2
 v5.11.3
 v5.11.4
 v5.11.5
-v5.12.0
 v5.12.0
 
 END
