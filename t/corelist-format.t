@@ -105,3 +105,10 @@ v5.12.0
 v5.12.0
 
 END
+
+
+my @out = `$^X -Ilib ./corelist -v 5.006`;
+is $out[1], "The following modules were in perl 5.006 CORE\n";
+
+@out = `$^X -Ilib ./corelist -v 5.6.0`;
+is $out[1], "The following modules were in perl 5.6.0 CORE\n";

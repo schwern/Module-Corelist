@@ -97,15 +97,16 @@ if(exists $Opts{v} ){
         exit 0;
     }
 
-    $Opts{v} = numify_version( $Opts{v} );
-    my $version_hash = Module::CoreList->find_version($Opts{v});
+    my $num_v = numify_version( $Opts{v} );
+    my $version_hash = Module::CoreList->find_version($num_v);
+
     if( !$version_hash ) {
-        print "\nModule::CoreList has no info on perl v$Opts{v}\n\n";
+        print "\nModule::CoreList has no info on perl $Opts{v}\n\n";
         exit 1;
     }
 
     if ( !@ARGV ) {
-	print "\nThe following modules were in perl v$Opts{v} CORE\n";
+	print "\nThe following modules were in perl $Opts{v} CORE\n";
 	print "$_ ", $version_hash->{$_} || " ","\n"
 	for sort keys %$version_hash;
 	print "\n";
